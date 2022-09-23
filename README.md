@@ -25,6 +25,6 @@ time.sleep(0.5)
 There is no wiring needed because the neopixel is part of the board. 
 
 ## Reflection
-#### Importing things is very important. You can only use functions that are first imported and the files are put in the lib folder. 
-#### Unlike Arduino, the loop for circuit python is the "while true:" instead of void loop. 
-#### You need to check the serial monitor of the board to see if anything is wrong. The serial monitor on the computer is not as useful.
+ Importing things is very important. You can only use functions that are first imported and the files are put in the lib folder. 
+ Unlike Arduino, the loop for circuit python is the "while true:" instead of void loop. 
+ You need to check the serial monitor of the board to see if anything is wrong. The serial monitor on the computer is not as useful.
