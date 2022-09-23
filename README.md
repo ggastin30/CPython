@@ -1,10 +1,13 @@
 # CPython
-(https://github.com/chssigma/Class_Accounts).
+This README contains documentation of my experiences through the new and foreign world of circuit python. If you are going to borrow some of it, please give credit or else you have plagiarised. See other people in my class at: https://github.com/chssigma/Class_Accounts.
+
 ## Blink Red
 ##### The goal of this assignment was to get started on some basic circuit python code and make the neopixel flash a red light.
 
 ### Description & Code
 ```
+#Grant Gastinger
+
 from time import time
 import board
 import neopixel
