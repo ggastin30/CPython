@@ -44,4 +44,4 @@ while True:
             lcd.print(str(clickCount))
         else:
             pass
-        time.sleep(0.1) # sleep for debounce
+    time.sleep(0.1) # sleep for debounce
