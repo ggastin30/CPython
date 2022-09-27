@@ -1,5 +1,5 @@
 #Grant Gastinger
-#lcdAssignment
+#lcdAssignment based off 
 #Uses an LCD to display the amount of times a button is clicked. Reverses if switch is flipped.
 
 import board
