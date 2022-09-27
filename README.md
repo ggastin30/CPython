@@ -8,7 +8,6 @@ This README contains documentation of my experiences through the new and foreign
 * [NextAssignmentGoesHere](#NextAssignment)
 ---
 ## Hello_CircuitPython
-##### The goal of this assignment was to get started on some basic circuit python code and make the neopixel flash a red light.
 
 ### Description & Code
 ```
@@ -34,6 +33,7 @@ dot.fill((0,0,0))
 time.sleep(0.5)
 ```
 ### Evidence
+https://user-images.githubusercontent.com/91094422/192555526-bd92a678-54f8-4581-986d-d5b9983d4272.mp4
 
 ### Wiring
 There is no wiring needed because the neopixel is part of the board. 
@@ -43,30 +43,33 @@ There is no wiring needed because the neopixel is part of the board.
  Unlike Arduino, the loop for circuit python is the "while true:" instead of void loop. 
  You need to check the serial monitor of the board to see if anything is wrong. The serial monitor on the computer is not as useful.
 
-## Servo
-####
-
-
-![spinningMetro_Optimized](https://user-images.githubusercontent.com/54641488/192549584-18285130-2e3b-4631-8005-0792c2942f73.gif)
-
-
-And here is how you should give image credit to someone, if you use their work:
-
-Image credit goes to [Rick A](https://www.youtube.com/watch?v=dQw4w9WgXcQ&scrlybrkr=8931d0bc)
-
-
-
-### Wiring
-Make an account with your google ID at [tinkercad.com](https://www.tinkercad.com/learn/circuits), and use "TinkerCad Circuits to make a wiring diagram."  It's really easy!  
-Then post an image here.   [here's a quick tutorial for all markdown code, like making links](https://guides.github.com/features/mastering-markdown/)
-
 
 ## CircuitPython_Servo
 
 ### Description & Code
 
-```python
-Code goes here
+```
+#Grant Gastinger
+#
+# SPDX-FileCopyrightText: 2018 Kattni Rembor for Adafruit Industries
+import time
+import board
+import pwmio
+from adafruit_motor import servo
+
+# create a PWMOut object on Pin A2.
+pwm = pwmio.PWMOut(board.D2, duty_cycle=2 ** 15, frequency=250)
+
+# Create a servo object, my_servo.
+my_servo = servo.Servo(pwm)
+
+while True:
+    for angle in range(0, 180, 5):  # 0 - 180 degrees, 5 degrees at a time.
+        my_servo.angle = angle
+        time.sleep(0.01)
+    for angle in range(180, 0, -5): # 180 - 0 degrees, 5 degrees at a time.
+        my_servo.angle = angle
+        time.sleep(0.01)
 
 ```
 
