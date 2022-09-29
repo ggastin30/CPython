@@ -50,8 +50,10 @@ There is no wiring needed because the neopixel is part of the board.
 
 ```
 #Grant Gastinger
-#
-# SPDX-FileCopyrightText: 2018 Kattni Rembor for Adafruit Industries
+#CircuitPython_Servo
+#Makes a 180 servo turn back and forth 
+#Based off of code from: 2018 Kattni Rembor for Adafruit Industries
+
 import time
 import board
 import pwmio
@@ -74,22 +76,43 @@ while True:
 ```
 
 ### Evidence
-
-Pictures / Gifs of your work should go here.  You need to communicate what your thing does.
+https://user-images.githubusercontent.com/91094422/193044111-5d46a9d9-b366-4e6e-9d3c-922e085cacc6.mp4
 
 ### Wiring
+![EliasWiring](https://user-images.githubusercontent.com/91094422/193046672-c67778a8-b683-4d67-8af1-8846cccd1db1.png)
+
+Image credit: Elias Garcia
 
 ### Reflection
-
-
-
+[Here's where I found the basis for my code](https://learn.adafruit.com/circuitpython-essentials/circuitpython-servo)  There was one issue, you need to use the D pins(digital pins) for the servo, not the A pins.
 
 ## CircuitPython_LCD
 
 ### Description & Code
 
-```python
-Code goes here
+```
+# SPDX-FileCopyrightText: 2018 Kattni Rembor for Adafruit Industries
+#hi
+# SPDX-License-Identifier: MIT
+"""CircuitPython Essentials Servo standard servo example"""
+import time
+import board
+import pwmio
+from adafruit_motor import servo
+
+# create a PWMOut object on Pin A2.
+pwm = pwmio.PWMOut(board.D2, duty_cycle=2 ** 15, frequency=250)
+
+# Create a servo object, my_servo.
+my_servo = servo.Servo(pwm)
+
+while True:
+    for angle in range(0, 180, 5):  # 0 - 180 degrees, 5 degrees at a time.
+        my_servo.angle = angle
+        time.sleep(0.01)
+    for angle in range(180, 0, -5): # 180 - 0 degrees, 5 degrees at a time.
+        my_servo.angle = angle
+        time.sleep(0.01)
 
 ```
 
