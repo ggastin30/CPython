@@ -136,9 +136,8 @@ while True:
 ### Evidence
 https://user-images.githubusercontent.com/91094422/193284908-be352a88-619a-47df-9850-289edfa8f144.mp4
 
-
 ### Wiring
-![EliasWiring2](https://user-images.githubusercontent.com/91094422/193284921-747f2ab6-ee39-4d69-8a55-e5101cb426a7.png)
+![eLIAS3](https://user-images.githubusercontent.com/91094422/193285420-b9590fd5-7f85-4ac5-8543-de44b9a417bd.png)
 
 ### Reflection
 When dealing with if statements, instead of using brackets like in arduino, you need to make sure the code is indented correctly. If a line of code is not indented enough, it will not be run in the loop. The syntax for the map function is "variable = simpleio.map_range(measured variable, input min, input max, output min, output max). "try" is a loop that checks a bunch of if statements and if none of them work, it runs the "except RuntimeError:" loop. 
