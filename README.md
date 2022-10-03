@@ -12,7 +12,7 @@ This README contains documentation of my experiences through the new and foreign
 ### Description & Code
 ```
 #Grant Gastinger
-#Hello_CircuitPython
+#firstAssignment
 #Turns the neopixel red and makes it blink
 #Code Based of Example code from Engineering 3 Canvas
 
@@ -51,7 +51,7 @@ There is no wiring needed because the neopixel is part of the board.
 
 ```
 #Grant Gastinger
-#CircuitPython_Servo
+#servoAssignment
 #Makes a 180 servo turn back and forth 
 #Based off of code from: 2018 Kattni Rembor for Adafruit Industries
 
@@ -95,7 +95,7 @@ Image credit: Elias Garcia
 
 ```
 #Grant Gastinger
-#CircuitPython_DistanceSensor
+#ultraSensor
 #Have a neopixel fade colors from green to blue to red when at <5cm, 5-20cm, >20cm
 #Based off code from Graham Gilbert-Schroeer
 import time
@@ -146,9 +146,55 @@ When dealing with if statements, instead of using brackets like in arduino, you 
 
 ### Description & Code
 
-```python
-Code goes here
+```
+#Grant Gastinger
+#lcdAssignment
+#Uses an LCD to display the amount of times a button is clicked. Reverses if switch is flipped.
+#Based off code from Engineering 3 canvas
 
+import board
+from lcd.lcd import LCD
+from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+import time
+from digitalio import DigitalInOut, Direction, Pull
+
+# get and i2c object
+i2c = board.I2C()
+btn = DigitalInOut(board.D2)
+btn.direction = Direction.INPUT
+btn.pull = Pull.UP
+clickCount = 0
+
+switch = DigitalInOut(board.D7)
+switch.direction = Direction.INPUT
+switch.pull = Pull.UP
+# some LCDs are 0x3f... some are 0x27...
+lcd = LCD(I2CPCF8574Interface(i2c, 0x3f), num_rows=2, num_cols=16)
+
+lcd.print("Grant")
+
+while True:
+    if not switch.value:
+        if not btn.value:
+            lcd.clear()
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("Click Count:")
+            lcd.set_cursor_pos(0,13)
+            clickCount = clickCount + 1
+            lcd.print(str(clickCount))
+        else:
+            pass
+    else:
+        if not btn.value:
+            lcd.clear()
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("Click Count:")
+            lcd.set_cursor_pos(0,13)
+            clickCount = clickCount - 1
+            lcd.print(str(clickCount))
+        else:
+            pass
+    time.sleep(0.1) # sleep for debounce
 ```
 
 ### Evidence
