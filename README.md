@@ -1,11 +1,10 @@
 # Circuit Python
 This README contains documentation of my experiences through the new and foreign world of circuit python. If you are going to borrow some of it, please give credit or else you have plagiarised. See other people in my class at: (https://github.com/chssigma/Class_Accounts).
 ## Table of Contents
-* [Table of Contents](#TableOfContents)
 * [Hello_CircuitPython](#Hello_CircuitPython)
 * [CircuitPython_Servo](#CircuitPython_Servo)
 * [CircuitPython_LCD](#CircuitPython_LCD)
-* [NextAssignmentGoesHere](#NextAssignment)
+* [CircuitPython Ultrasonic Sensor](#CircuitPython_Ultrasonic_Sensor)
 ---
 ## Hello_CircuitPython
 
@@ -198,10 +197,11 @@ while True:
 ```
 
 ### Evidence
-https://user-images.githubusercontent.com/91094422/197207468-bb83785c-c294-4438-9130-aa76a68dcc0e.mp4
+![image](https://user-images.githubusercontent.com/91094422/197212627-0e835803-2ad7-4bbc-863a-95a5b803c1dd.png)
+Video Credit: Elias Garcia
 
 ### Wiring
-![image](https://user-images.githubusercontent.com/91094422/197207926-361bca89-39fb-4177-bf11-59dc2a264058.png)
+![image](https://user-images.githubusercontent.com/91094422/197210798-31bc93db-ff26-4a1f-b279-9e3f9c75e703.png)
 Image Credit: Elias Garcia
 
 ### Reflection
