@@ -198,7 +198,11 @@ while True:
 ```
 
 ### Evidence
+https://user-images.githubusercontent.com/91094422/197207468-bb83785c-c294-4438-9130-aa76a68dcc0e.mp4
 
 ### Wiring
+![image](https://user-images.githubusercontent.com/91094422/197207926-361bca89-39fb-4177-bf11-59dc2a264058.png)
+Image Credit: Elias Garcia
 
 ### Reflection
+If you use a pull up on one of your pins it makes it much easier to use a button because all you need to do is wire it from the pin to gnd and it is a fully functional button. Also make sure that when using a push button you put the wires on diagonal sides, right across from each other won't do anything. Make sure to set the cursor and also clear the lcd before you try to print anything. While true: is pretty much just the void loop in arduino.
