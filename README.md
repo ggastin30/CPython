@@ -4,7 +4,7 @@ This README contains documentation of my experiences through the new and foreign
 * [Hello_CircuitPython](#Hello_CircuitPython)
 * [CircuitPython_Servo](#CircuitPython_Servo)
 * [CircuitPython_LCD](#CircuitPython_LCD)
-* [CircuitPython Ultrasonic Sensor](#CircuitPython_Ultrasonic_Sensor)
+* [CircuitPython Ultrasonic Sensor](#CircuitPython_DistanceSensor)
 ---
 ## Hello_CircuitPython
 
