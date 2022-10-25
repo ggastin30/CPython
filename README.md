@@ -9,7 +9,7 @@ This README contains documentation of my experiences through the new and foreign
 ---
 ## Hello_CircuitPython
 
-### Description & Code
+### Code
 ``` python
 #Grant Gastinger
 #firstAssignment
@@ -47,7 +47,7 @@ There is no wiring needed because the neopixel is part of the board.
 
 ## CircuitPython_Servo
 
-### Description & Code
+### Code
 
 ``` python
 #Grant Gastinger
@@ -89,7 +89,7 @@ Image credit: [Elias Garcia](https://github.com/egarcia28/CircuitPython)
 
 ## CircuitPython_DistanceSensor
 
-### Description & Code
+### Code
 
 ``` python
 #Grant Gastinger
@@ -144,7 +144,7 @@ When dealing with if statements, instead of using brackets like in arduino, you 
 
 ## CircuitPython_LCD
 
-### Description & Code
+### Code
 
 ``` python
 #Grant Gastinger
