@@ -81,7 +81,7 @@ https://user-images.githubusercontent.com/91094422/193044111-5d46a9d9-b366-4e6e-
 ### Wiring
 ![EliasWiring](https://user-images.githubusercontent.com/91094422/193046672-c67778a8-b683-4d67-8af1-8846cccd1db1.png)
 
-Image credit: Elias Garcia
+Image credit: Elias Garcia https://github.com/egarcia28/CircuitPython
 
 ### Reflection
 [Here's where I found the basis for my code](https://learn.adafruit.com/circuitpython-essentials/circuitpython-servo)  There was one issue, you need to use the D pins(digital pins) for the servo, not the A pins.
@@ -137,6 +137,8 @@ https://user-images.githubusercontent.com/91094422/193284908-be352a88-619a-47df-
 
 ### Wiring
 ![eLIAS3](https://user-images.githubusercontent.com/91094422/193285420-b9590fd5-7f85-4ac5-8543-de44b9a417bd.png)
+
+Image Credit: Elias Garcia https://github.com/egarcia28/CircuitPython
 
 ### Reflection
 When dealing with if statements, instead of using brackets like in arduino, you need to make sure the code is indented correctly. If a line of code is not indented enough, it will not be run in the loop. The syntax for the map function is "variable = simpleio.map_range(measured variable, input min, input max, output min, output max). "try" is a loop that checks a bunch of if statements and if none of them work, it runs the "except RuntimeError:" loop. 
@@ -198,11 +200,13 @@ while True:
 
 ### Evidence
 ![image](https://user-images.githubusercontent.com/91094422/197212627-0e835803-2ad7-4bbc-863a-95a5b803c1dd.png)
-Video Credit: Elias Garcia
+
+Image Credit: Elias Garcia https://github.com/egarcia28/CircuitPython
 
 ### Wiring
 ![image](https://user-images.githubusercontent.com/91094422/197210798-31bc93db-ff26-4a1f-b279-9e3f9c75e703.png)
-Image Credit: Elias Garcia
+
+Image Credit: Elias Garcia https://github.com/egarcia28/CircuitPython
 
 ### Reflection
 If you use a pull up on one of your pins it makes it much easier to use a button because all you need to do is wire it from the pin to gnd and it is a fully functional button. Also make sure that when using a push button you put the wires on diagonal sides, right across from each other won't do anything. Make sure to set the cursor and also clear the lcd before you try to print anything. While true: is pretty much just the void loop in arduino.
