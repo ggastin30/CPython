@@ -3,8 +3,9 @@ This README contains documentation of my experiences through the new and foreign
 ## Table of Contents
 * [Hello_CircuitPython](#Hello_CircuitPython)
 * [CircuitPython_Servo](#CircuitPython_Servo)
+* [CircuitPython_DistanceSensor](#CircuitPython_DistanceSensor)
 * [CircuitPython_LCD](#CircuitPython_LCD)
-* [CircuitPython Ultrasonic Sensor](#CircuitPython_DistanceSensor)
+
 ---
 ## Hello_CircuitPython
 
