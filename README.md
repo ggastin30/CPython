@@ -202,3 +202,4 @@ while True:
 ### Wiring
 
 ### Reflection
+This assignment created many problems for me when I didn't indent some of my else loops and it caused me to get numerous errors. The pass function just skips 
