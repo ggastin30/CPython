@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: 2018 Kattni Rembor for Adafruit Industries
-#hi
+#ctrl alt r
 # SPDX-License-Identifier: MIT
 """CircuitPython Essentials Servo standard servo example"""
 import time
