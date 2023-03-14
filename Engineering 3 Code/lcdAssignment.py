@@ -19,7 +19,7 @@ switch = DigitalInOut(board.D7)
 switch.direction = Direction.INPUT
 switch.pull = Pull.UP
 # some LCDs are 0x3f... some are 0x27...
-lcd = LCD(I2CPCF8574Interface(i2c, 0x3f), num_rows=2, num_cols=16)
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
 
 lcd.print("Grant")
 
