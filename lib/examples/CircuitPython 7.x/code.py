@@ -7,17 +7,21 @@ background, a smaller purple rectangle, and some yellow text.
 
 Pinouts are for the 2.8" TFT Shield
 """
-import adafruit_ili9341
 import board
-import displayio
 import terminalio
+import displayio
 from adafruit_display_text import label
+import adafruit_ili9341
 
 # Release any resources currently in use for the displays
 displayio.release_displays()
 
 # Use Hardware SPI
 spi = board.SPI()
+
+# Use Software SPI if you have a shield with pins 11-13 jumpered
+# import busio
+# spi = busio.SPI(board.D11, board.D13)
 
 tft_cs = board.D10
 tft_dc = board.D9
