@@ -4,11 +4,19 @@ from lcd.lcd import LCD
 from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
 import time
 import analogio
+import digitalio
+
+lcdPower = digitalio.DigitalInOut(board.D8)
+lcdPower.direction = digitalio.Direction.INPUT
+lcdPower.pull = digitalio.Pull.DOWN
+
+while lcdPower.value is False:
+    print("zzz")
+    time.sleep(0.1)
 
 
 TMP36_PIN = board.A0  # Analog input connected to TMP36 output.
 i2c = board.I2C()
-
 
 # Function to simplify the math of reading the temperature.
 def tmp36_temperature_C(analogin):
