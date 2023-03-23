@@ -15,12 +15,13 @@ while lcdPower.value is False:
     time.sleep(0.1)
 
 
-TMP36_PIN = board.A0  # Analog input connected to TMP36 output.
+TMP36_PIN = board.A3  # Analog input connected to TMP36 output.
 i2c = board.I2C()
 
 # Function to simplify the math of reading the temperature.
 def tmp36_temperature_C(analogin):
     millivolts = analogin.value * (analogin.reference_voltage * 1000 / 65535)
+    print(millivolts)
     return (millivolts - 500) / 10
 
 lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
@@ -36,5 +37,6 @@ while True:
     # Convert to Fahrenheit.
     temp_F = (temp_C * 9/5) + 32
     # Print out the value and delay a second before looping again.
+    lcd.clear()
     lcd.print("Temperature: {}C {}F".format(temp_C, temp_F))
     time.sleep(1.0)
