@@ -26,16 +26,15 @@ def tmp36_temperature_C(analogin):
 lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
 # Create TMP36 analog input.
 tmp36 = analogio.AnalogIn(TMP36_PIN)
-
+print("I'm awake")
+lcd.print("Hello World")
 
 # Loop forever.
 while True:
-    lcd.clear()
-    lcd.print("Grant")
     # Read the temperature in Celsius.
     temp_C = tmp36_temperature_C(tmp36)
     # Convert to Fahrenheit.
     temp_F = (temp_C * 9/5) + 32
     # Print out the value and delay a second before looping again.
-    print("Temperature: {}C {}F".format(temp_C, temp_F))
+    lcd.print("Temperature: {}C {}F".format(temp_C, temp_F))
     time.sleep(1.0)
