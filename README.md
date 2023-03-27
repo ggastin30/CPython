@@ -201,9 +201,9 @@ while True:
 https://user-images.githubusercontent.com/91094422/227958939-2c2409b1-4215-4c89-82d6-b5a4610543a1.mp4
 
 ### Wiring
-![image](https://user-images.githubusercontent.com/91094422/197210798-31bc93db-ff26-4a1f-b279-9e3f9c75e703.png)
+![image](https://user-images.githubusercontent.com/91094422/227959484-2b4946bd-25eb-40a5-8cdf-d9cb118c32d0.png)
 
-Image Credit: [Elias Garcia](https://github.com/egarcia28/CircuitPython)
+Image Credit: [Sophie Chen](https://github.com/sechen12/CircuitPython)
 
 ### Reflection
-If you use a pull up on one of your pins it makes it much easier to use a button because all you need to do is wire it from the pin to gnd and it is a fully functional button. Also make sure that when using a push button you put the wires on diagonal sides, right across from each other won't do anything. Make sure to set the cursor and also clear the lcd before you try to print anything. While true: is pretty much just the void loop in arduino.
+
