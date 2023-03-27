@@ -203,7 +203,7 @@ https://user-images.githubusercontent.com/91094422/227958939-2c2409b1-4215-4c89-
 ### Wiring
 ![image](https://user-images.githubusercontent.com/91094422/227959484-2b4946bd-25eb-40a5-8cdf-d9cb118c32d0.png)
 
-Image Credit: [Sophie Chen](https://github.com/sechen12/CircuitPython)
+Image Credit: [Sophie Chen](https://github.com/sechen12/CircutPython)
 
 ### Reflection
 
