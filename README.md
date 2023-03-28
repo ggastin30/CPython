@@ -206,4 +206,4 @@ https://user-images.githubusercontent.com/91094422/227958939-2c2409b1-4215-4c89-
 Image Credit: [Sophie Chen](https://github.com/sechen12/CircutPython)
 
 ### Reflection
-
+This assignment seemed to be super simple at the start but I ran into many problems with the lcd. The code wouldn't upload if the lcd was plugged in so we developed a solution after 2 weeks by pulling the SDA and SCL pins up to 5 volts with a resistor and creating a switch that starts the lcd after the code is uploaded. On top of that issue, there was another with my temperature sensor where it was constantly reading the temperature as 50 degress farenheight even with the same code as everyone else. I had to just calibrate it to the room. Circuit python and lcds do not mix.
