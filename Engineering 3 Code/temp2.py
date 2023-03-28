@@ -9,11 +9,8 @@ TMP36_PIN = board.A4  # Analog input connected to TMP36 output.
 # Function to simplify the math of reading the temperature.
 def tmp36_temperature_C(analogin):
     millivolts = analogin.value * (analogin.reference_voltage * 1000 / 65535)
-    print(analogin.value)
-    print(analogin.reference_voltage)
-    print(millivolts)
     return (millivolts - 500) / 10
-
+l
 
 # Create TMP36 analog input.
 tmp36 = analogio.AnalogIn(TMP36_PIN)
