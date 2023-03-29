@@ -5,6 +5,9 @@ This README contains documentation of my experiences through the new and foreign
 * [CircuitPython_Servo](#CircuitPython_Servo)
 * [CircuitPython_DistanceSensor](#CircuitPython_DistanceSensor)
 * [CircuitPython_LCD](#CircuitPython_LCD)
+* [CircuitPython_TMP36](CircuitPython_TMP36)
+* [CircuitPython_RotaryEncoder](CircuitPython_RotaryEncoder)
+* [CircuitPython_Interrupter](CircuitPython_Interrupter)
 
 ---
 ## Hello_CircuitPython
@@ -302,7 +305,7 @@ Image Credit: [Elias](https://github.com/egarcia28/Circuit-Python_2)
 ### Reflection
 I was in a rush in this assignment so I had to borrow code but luckily it worked almost first try. I still had to use a switch and pull the lcd up because I still had the issue with the uploading and the lcd from the last assignment. Elifs make a lot more sense than cases and are much neater and more understandable.
 
-## CircuitPython_RotaryEncoder
+## CircuitPython_Interrupter
 This assignment displays the number of times a photointerrupter is interrupted on the monitor every 4 seconds.
 ### Code
 
