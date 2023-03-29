@@ -143,7 +143,7 @@ Image Credit: [Elias Garcia](https://github.com/egarcia28/CircuitPython)
 When dealing with if statements, instead of using brackets like in arduino, you need to make sure the code is indented correctly. If a line of code is not indented enough, it will not be run in the loop. The syntax for the map function is "variable = simpleio.map_range(measured variable, input min, input max, output min, output max). "try" is a loop that checks a bunch of if statements and if none of them work, it runs the "except RuntimeError:" loop. 
 
 ## CircuitPython_TMP36
-
+This assignment shows the temperature on an LCD by using a temperature sensor.
 ### Code
 
 ``` python
@@ -209,7 +209,7 @@ Image Credit: [Sophie Chen](https://github.com/sechen12/CircutPython)
 This assignment seemed to be super simple at the start but I ran into many problems with the lcd. The code wouldn't upload if the lcd was plugged in so we developed a solution after 2 weeks by pulling the SDA and SCL pins up to 5 volts with a resistor and creating a switch that starts the lcd after the code is uploaded. On top of that issue, there was another with my temperature sensor where it was constantly reading the temperature as 50 degress farenheight even with the same code as everyone else. I had to just calibrate it to the room. Circuit python and lcds do not mix.
 
 ## CircuitPython_RotaryEncoder
-
+This assignment changes traffic lights using a rotary encoder and displays the state of the light on an LCD.
 ### Code
 
 ``` python
@@ -301,3 +301,98 @@ Image Credit: [Elias](https://github.com/egarcia28/Circuit-Python_2)
 
 ### Reflection
 I was in a rush in this assignment so I had to borrow code but luckily it worked almost first try. I still had to use a switch and pull the lcd up because I still had the issue with the uploading and the lcd from the last assignment. Elifs make a lot more sense than cases and are much neater and more understandable.
+
+## CircuitPython_RotaryEncoder
+This assignment displays the number of times a photointerrupter is interrupted on the monitor every 4 seconds.
+### Code
+
+``` python
+import time
+import rotaryio
+import board
+from lcd.lcd import LCD
+from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+from digitalio import DigitalInOut, Direction, Pull
+import digitalio
+
+lcdPower = digitalio.DigitalInOut(board.D7) #connects the lcd to pin 8
+lcdPower.direction = digitalio.Direction.INPUT #sets the lcd power flow as input
+lcdPower.pull = digitalio.Pull.DOWN #Pulls the power of the lcd down to ground
+
+while lcdPower.value is False: #creates an infinite loop that repeats until the lcd turns on
+    print("zzz")
+    time.sleep(0.1)
+
+print("I'm awake")
+
+encoder = rotaryio.IncrementalEncoder(board.D3, board.D2)
+last_position = 0
+btn = DigitalInOut(board.D1)
+btn.direction = Direction.INPUT
+btn.pull = Pull.UP
+state = 0
+Buttonyep = 1
+
+i2c = board.I2C()
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+
+ledGreen = DigitalInOut(board.D8)
+ledYellow = DigitalInOut(board.D9)
+ledRed = DigitalInOut(board.D10)
+ledGreen.direction = Direction.OUTPUT
+ledYellow.direction = Direction.OUTPUT
+ledRed.direction = Direction.OUTPUT
+
+while True:
+    position = encoder.position
+    if position != last_position:
+        if position > last_position:
+            state = state + 1
+        elif position < last_position:
+            state = state - 1
+        if state > 2:
+            state = 2
+        if state < 0:
+            state = 0
+        print(state)
+        if state == 0: 
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("GOOOOO")
+        elif state == 1:
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("yellow")
+        elif state == 2:
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("STOPPP")
+    if btn.value == 0 and Buttonyep == 1:
+        print("buttion")
+        if state == 0: 
+                ledGreen.value = True
+                ledRed.value = False
+                ledYellow.value = False
+        elif state == 1:
+                ledYellow.value = True
+                ledRed.value = False
+                ledGreen.value = False
+        elif state == 2:
+                ledRed.value = True
+                ledGreen.value = False
+                ledYellow.value = False
+        Buttonyep = 0
+    if btn.value == 1:
+        time.sleep(.1)
+        Buttonyep = 1
+    last_position = position
+```
+[Code based off of Elias](https://github.com/egarcia28/Circuit-Python_2)
+
+### Evidence
+https://user-images.githubusercontent.com/91094422/228622021-59a02e64-8a3f-4e4f-a0cd-dc0980f2e06b.mp4
+
+### Wiring
+![image](https://user-images.githubusercontent.com/91094422/228622233-68fe20e7-090c-420e-a98a-fc7eae0750f9.png)
+
+Image Credit: [Elias](https://github.com/egarcia28/Circuit-Python_2)
+
+### Reflection
+This assignment was much easier than the other ones in this unit because it didn't include an lcd thankfully.!= can be used in if statements and means that something is not equal to a value. I also used a last_update value to make sure that the value changed or else it will just end the loop and print the current value.
