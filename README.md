@@ -5,6 +5,9 @@ This README contains documentation of my experiences through the new and foreign
 * [CircuitPython_Servo](#CircuitPython_Servo)
 * [CircuitPython_DistanceSensor](#CircuitPython_DistanceSensor)
 * [CircuitPython_LCD](#CircuitPython_LCD)
+* [CircuitPython_TMP36](CircuitPython_TMP36)
+* [CircuitPython_RotaryEncoder](CircuitPython_RotaryEncoder)
+* [CircuitPython_Interrupter](CircuitPython_Interrupter)
 
 ---
 ## Hello_CircuitPython
@@ -142,70 +145,257 @@ Image Credit: [Elias Garcia](https://github.com/egarcia28/CircuitPython)
 ### Reflection
 When dealing with if statements, instead of using brackets like in arduino, you need to make sure the code is indented correctly. If a line of code is not indented enough, it will not be run in the loop. The syntax for the map function is "variable = simpleio.map_range(measured variable, input min, input max, output min, output max). "try" is a loop that checks a bunch of if statements and if none of them work, it runs the "except RuntimeError:" loop. 
 
-## CircuitPython_LCD
-
+## CircuitPython_TMP36
+This assignment shows the temperature on an LCD by using a temperature sensor.
 ### Code
 
 ``` python
-#Grant Gastinger
-#lcdAssignment
-#Uses an LCD to display the amount of times a button is clicked. Reverses if switch is flipped.
-#Based off code from Engineering 3 canvas
-
 import board
 from lcd.lcd import LCD
 from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
 import time
-from digitalio import DigitalInOut, Direction, Pull
+import analogio
+import digitalio
 
-# get and i2c object
-i2c = board.I2C()
-btn = DigitalInOut(board.D2)
-btn.direction = Direction.INPUT
-btn.pull = Pull.UP
-clickCount = 0
+lcdPower = digitalio.DigitalInOut(board.D8) #connects the lcd to pin 8
+lcdPower.direction = digitalio.Direction.INPUT #sets the lcd power flow as input
+lcdPower.pull = digitalio.Pull.DOWN #Pulls the power of the lcd down to ground
 
-switch = DigitalInOut(board.D7)
-switch.direction = Direction.INPUT
-switch.pull = Pull.UP
-# some LCDs are 0x3f... some are 0x27...
-lcd = LCD(I2CPCF8574Interface(i2c, 0x3f), num_rows=2, num_cols=16)
+while lcdPower.value is False: #creates an infinite loop that repeats until the lcd turns on
+    print("zzz")
+    time.sleep(0.1)
 
-lcd.print("Grant")
 
+TMP36_PIN = board.A3  # Analog input connected to TMP36 output.
+i2c = board.I2C() #I2c on the lcd
+
+# Function to simplify the math of reading the temperature.
+def tmp36_temperature_C(analogin):
+    millivolts = analogin.value * (analogin.reference_voltage * 1000 / 54000) #Standard: 65535
+    return (millivolts - 500) / 10
+
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16) #sets the format of lcd
+# Create TMP36 analog input.
+tmp36 = analogio.AnalogIn(TMP36_PIN) #Sets the temperature sensor to pin 3 input
+print("I'm awake")
+
+# Loop forever.
 while True:
-    if not switch.value: #If switch is not flipped...
-        if not btn.value:
-            lcd.clear() #clear lcd
-            lcd.set_cursor_pos(0, 0) #move cursor to top left
-            lcd.print("Click Count:")
-            lcd.set_cursor_pos(0,13)
-            clickCount = clickCount + 1 #add 1 to click count
-            lcd.print(str(clickCount)) #str needed to print variables
-        else:
-            pass #end the loop
-    else: #if switch is flipped...
-        if not btn.value:
-            lcd.clear()
-            lcd.set_cursor_pos(0, 0)
-            lcd.print("Click Count:")
-            lcd.set_cursor_pos(0,13)
-            clickCount = clickCount - 1
-            lcd.print(str(clickCount))
-        else:
-            pass
-    time.sleep(0.1) # sleep for debounce
+    # Read the temperature in Celsius.
+    temp_C = tmp36_temperature_C(tmp36)
+    # Convert to Fahrenheit.
+    temp_F = (temp_C * 9/5) + 32
+    if temp_F > 78: #if it's over 78, say it's too hot
+        lcd.clear()
+        lcd.print("TOO HAWT")
+        time.sleep(1.0)
+    elif temp_F < 70: #if it's below 70, say it's cold
+        lcd.clear()
+        lcd.print("BRRRR")
+        time.sleep(1.0)
+    else: #if it's normal, say it's room temp
+        lcd.clear()
+        lcd.print("Room Temperature")
+    #lcd.print("Temperature: {}C {}F".format(temp_C, temp_F))
+    time.sleep(1.0)
 ```
 
 ### Evidence
-![image](https://user-images.githubusercontent.com/91094422/197212627-0e835803-2ad7-4bbc-863a-95a5b803c1dd.png)
-
-Image Credit: [Elias Garcia](https://github.com/egarcia28/CircuitPython)
+https://user-images.githubusercontent.com/91094422/227958939-2c2409b1-4215-4c89-82d6-b5a4610543a1.mp4
 
 ### Wiring
-![image](https://user-images.githubusercontent.com/91094422/197210798-31bc93db-ff26-4a1f-b279-9e3f9c75e703.png)
+![image](https://user-images.githubusercontent.com/91094422/227959484-2b4946bd-25eb-40a5-8cdf-d9cb118c32d0.png)
 
-Image Credit: [Elias Garcia](https://github.com/egarcia28/CircuitPython)
+Image Credit: [Sophie Chen](https://github.com/sechen12/CircutPython)
 
 ### Reflection
-If you use a pull up on one of your pins it makes it much easier to use a button because all you need to do is wire it from the pin to gnd and it is a fully functional button. Also make sure that when using a push button you put the wires on diagonal sides, right across from each other won't do anything. Make sure to set the cursor and also clear the lcd before you try to print anything. While true: is pretty much just the void loop in arduino.
+This assignment seemed to be super simple at the start but I ran into many problems with the lcd. The code wouldn't upload if the lcd was plugged in so we developed a solution after 2 weeks by pulling the SDA and SCL pins up to 5 volts with a resistor and creating a switch that starts the lcd after the code is uploaded. On top of that issue, there was another with my temperature sensor where it was constantly reading the temperature as 50 degress farenheight even with the same code as everyone else. I had to just calibrate it to the room. Circuit python and lcds do not mix.
+
+## CircuitPython_RotaryEncoder
+This assignment changes traffic lights using a rotary encoder and displays the state of the light on an LCD.
+### Code
+
+``` python
+import time
+import rotaryio
+import board
+from lcd.lcd import LCD
+from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+from digitalio import DigitalInOut, Direction, Pull
+import digitalio
+
+lcdPower = digitalio.DigitalInOut(board.D7) #connects the lcd to pin 8
+lcdPower.direction = digitalio.Direction.INPUT #sets the lcd power flow as input
+lcdPower.pull = digitalio.Pull.DOWN #Pulls the power of the lcd down to ground
+
+while lcdPower.value is False: #creates an infinite loop that repeats until the lcd turns on
+    print("zzz")
+    time.sleep(0.1)
+
+print("I'm awake")
+
+encoder = rotaryio.IncrementalEncoder(board.D3, board.D2)
+last_position = 0
+btn = DigitalInOut(board.D1)
+btn.direction = Direction.INPUT
+btn.pull = Pull.UP
+state = 0
+Buttonyep = 1
+
+i2c = board.I2C()
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+
+ledGreen = DigitalInOut(board.D8)
+ledYellow = DigitalInOut(board.D9)
+ledRed = DigitalInOut(board.D10)
+ledGreen.direction = Direction.OUTPUT
+ledYellow.direction = Direction.OUTPUT
+ledRed.direction = Direction.OUTPUT
+
+while True:
+    position = encoder.position
+    if position != last_position:
+        if position > last_position:
+            state = state + 1
+        elif position < last_position:
+            state = state - 1
+        if state > 2:
+            state = 2
+        if state < 0:
+            state = 0
+        print(state)
+        if state == 0: 
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("GOOOOO")
+        elif state == 1:
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("yellow")
+        elif state == 2:
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("STOPPP")
+    if btn.value == 0 and Buttonyep == 1:
+        print("buttion")
+        if state == 0: 
+                ledGreen.value = True
+                ledRed.value = False
+                ledYellow.value = False
+        elif state == 1:
+                ledYellow.value = True
+                ledRed.value = False
+                ledGreen.value = False
+        elif state == 2:
+                ledRed.value = True
+                ledGreen.value = False
+                ledYellow.value = False
+        Buttonyep = 0
+    if btn.value == 1:
+        time.sleep(.1)
+        Buttonyep = 1
+    last_position = position
+```
+[Code based off of Elias](https://github.com/egarcia28/Circuit-Python_2)
+### Evidence
+https://user-images.githubusercontent.com/91094422/228268440-82672a8a-6c48-4d38-b2ec-45b21c218bff.mp4
+
+### Wiring
+![image](https://user-images.githubusercontent.com/91094422/228265020-5b9756c1-e736-4655-9ca5-9d1b01f2ac95.png)
+
+Image Credit: [Elias](https://github.com/egarcia28/Circuit-Python_2)
+
+### Reflection
+I was in a rush in this assignment so I had to borrow code but luckily it worked almost first try. I still had to use a switch and pull the lcd up because I still had the issue with the uploading and the lcd from the last assignment. Elifs make a lot more sense than cases and are much neater and more understandable.
+
+## CircuitPython_Interrupter
+This assignment displays the number of times a photointerrupter is interrupted on the monitor every 4 seconds.
+### Code
+
+``` python
+import time
+import rotaryio
+import board
+from lcd.lcd import LCD
+from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+from digitalio import DigitalInOut, Direction, Pull
+import digitalio
+
+lcdPower = digitalio.DigitalInOut(board.D7) #connects the lcd to pin 8
+lcdPower.direction = digitalio.Direction.INPUT #sets the lcd power flow as input
+lcdPower.pull = digitalio.Pull.DOWN #Pulls the power of the lcd down to ground
+
+while lcdPower.value is False: #creates an infinite loop that repeats until the lcd turns on
+    print("zzz")
+    time.sleep(0.1)
+
+print("I'm awake")
+
+encoder = rotaryio.IncrementalEncoder(board.D3, board.D2)
+last_position = 0
+btn = DigitalInOut(board.D1)
+btn.direction = Direction.INPUT
+btn.pull = Pull.UP
+state = 0
+Buttonyep = 1
+
+i2c = board.I2C()
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+
+ledGreen = DigitalInOut(board.D8)
+ledYellow = DigitalInOut(board.D9)
+ledRed = DigitalInOut(board.D10)
+ledGreen.direction = Direction.OUTPUT
+ledYellow.direction = Direction.OUTPUT
+ledRed.direction = Direction.OUTPUT
+
+while True:
+    position = encoder.position
+    if position != last_position:
+        if position > last_position:
+            state = state + 1
+        elif position < last_position:
+            state = state - 1
+        if state > 2:
+            state = 2
+        if state < 0:
+            state = 0
+        print(state)
+        if state == 0: 
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("GOOOOO")
+        elif state == 1:
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("yellow")
+        elif state == 2:
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("STOPPP")
+    if btn.value == 0 and Buttonyep == 1:
+        print("buttion")
+        if state == 0: 
+                ledGreen.value = True
+                ledRed.value = False
+                ledYellow.value = False
+        elif state == 1:
+                ledYellow.value = True
+                ledRed.value = False
+                ledGreen.value = False
+        elif state == 2:
+                ledRed.value = True
+                ledGreen.value = False
+                ledYellow.value = False
+        Buttonyep = 0
+    if btn.value == 1:
+        time.sleep(.1)
+        Buttonyep = 1
+    last_position = position
+```
+[Code based off of Elias](https://github.com/egarcia28/Circuit-Python_2)
+
+### Evidence
+https://user-images.githubusercontent.com/91094422/228622021-59a02e64-8a3f-4e4f-a0cd-dc0980f2e06b.mp4
+
+### Wiring
+![image](https://user-images.githubusercontent.com/91094422/228622233-68fe20e7-090c-420e-a98a-fc7eae0750f9.png)
+
+Image Credit: [Elias](https://github.com/egarcia28/Circuit-Python_2)
+
+### Reflection
+This assignment was much easier than the other ones in this unit because it didn't include an lcd thankfully.!= can be used in if statements and means that something is not equal to a value. I also used a last_update value to make sure that the value changed or else it will just end the loop and print the current value.
