@@ -5,6 +5,7 @@ This README contains documentation of my experiences through the new and foreign
 * [CircuitPython_Servo](#CircuitPython_Servo)
 * [CircuitPython_DistanceSensor](#CircuitPython_DistanceSensor)
 * [CircuitPython_LCD](#CircuitPython_LCD)
+* [CircuitPython_MotorControl](#CircuitPython_MotorControl)
 * [CircuitPython_TMP36](CircuitPython_TMP36)
 * [CircuitPython_RotaryEncoder](CircuitPython_RotaryEncoder)
 * [CircuitPython_Interrupter](CircuitPython_Interrupter)
