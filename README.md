@@ -212,6 +212,61 @@ Image Credit: [Sophie Chen](https://github.com/sechen12/CircutPython)
 ### Reflection
 This assignment seemed to be super simple at the start but I ran into many problems with the lcd. The code wouldn't upload if the lcd was plugged in so we developed a solution after 2 weeks by pulling the SDA and SCL pins up to 5 volts with a resistor and creating a switch that starts the lcd after the code is uploaded. On top of that issue, there was another with my temperature sensor where it was constantly reading the temperature as 50 degress farenheight even with the same code as everyone else. I had to just calibrate it to the room. Circuit python and lcds do not mix.
 
+## CircuitPython_LCD 
+Uses an LCD to display the amount of times a button is clicked. Reverses if switch is flipped.
+### Code
+''' python
+#Grant Gastinger
+#lcdAssignment
+#Uses an LCD to display the amount of times a button is clicked. Reverses if switch is flipped.
+
+import board
+from lcd.lcd import LCD
+from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+import time
+from digitalio import DigitalInOut, Direction, Pull
+
+# get and i2c object
+i2c = board.I2C()
+btn = DigitalInOut(board.D2)
+btn.direction = Direction.INPUT
+btn.pull = Pull.UP
+clickCount = 0
+
+switch = DigitalInOut(board.D7)
+switch.direction = Direction.INPUT
+switch.pull = Pull.UP
+# some LCDs are 0x3f... some are 0x27...
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+
+lcd.print("Grant")
+
+while True:
+    if not switch.value:
+        if not btn.value:
+            lcd.clear()
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("Click Count:")
+            lcd.set_cursor_pos(0,13)
+            clickCount = clickCount + 1
+            lcd.print(str(clickCount))
+        else:
+            pass
+    else:
+        if not btn.value:
+            lcd.clear()
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("Click Count:")
+            lcd.set_cursor_pos(0,13)
+            clickCount = clickCount - 1
+            lcd.print(str(clickCount))
+        else:
+            pass
+    time.sleep(0.1) # sleep for debounce
+''' 
+### Evidence
+### Wiring 
+### Reflection 
 ## CircuitPython_RotaryEncoder
 This assignment changes traffic lights using a rotary encoder and displays the state of the light on an LCD.
 ### Code
