@@ -267,6 +267,28 @@ while True:
 ### Evidence
 ### Wiring 
 ### Reflection 
+
+## CircuitPython_MotorControl
+We had to control a motor by spinning it in different directions.
+### Code
+'''python
+import board               #[lines 1-4] Importing necessary libraries
+import time
+from analogio import AnalogOut, AnalogIn
+import simpleio
+
+motor = AnalogOut(board.A1) #[lines 5 & 6] Definining the motor and potentiometer
+pot = AnalogIn(board.A0)
+
+while True:
+    print(simpleio.map_range(pot.value, 96, 65520, 0, 65535)) #Print mapped potentiometer value to motor inputs
+    motor.value = int(simpleio.map_range(pot.value, 96, 65520, 0, 65535)) #Write the mapped value to motor
+    time.sleep(.1)       
+'''
+### Evidence
+### Wiring
+### Reflection
+
 ## CircuitPython_RotaryEncoder
 This assignment changes traffic lights using a rotary encoder and displays the state of the light on an LCD.
 ### Code
