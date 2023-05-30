@@ -5,6 +5,7 @@ This README contains documentation of my experiences through the new and foreign
 * [CircuitPython_Servo](#CircuitPython_Servo)
 * [CircuitPython_DistanceSensor](#CircuitPython_DistanceSensor)
 * [CircuitPython_LCD](#CircuitPython_LCD)
+* [CircuitPython_MotorControl](#CircuitPython_MotorControl)
 * [CircuitPython_TMP36](CircuitPython_TMP36)
 * [CircuitPython_RotaryEncoder](CircuitPython_RotaryEncoder)
 * [CircuitPython_Interrupter](CircuitPython_Interrupter)
@@ -210,6 +211,89 @@ Image Credit: [Sophie Chen](https://github.com/sechen12/CircutPython)
 
 ### Reflection
 This assignment seemed to be super simple at the start but I ran into many problems with the lcd. The code wouldn't upload if the lcd was plugged in so we developed a solution after 2 weeks by pulling the SDA and SCL pins up to 5 volts with a resistor and creating a switch that starts the lcd after the code is uploaded. On top of that issue, there was another with my temperature sensor where it was constantly reading the temperature as 50 degress farenheight even with the same code as everyone else. I had to just calibrate it to the room. Circuit python and lcds do not mix.
+
+## CircuitPython_LCD 
+Uses an LCD to display the amount of times a button is clicked. Reverses if switch is flipped.
+### Code
+``` python
+#Grant Gastinger
+#lcdAssignment
+#Uses an LCD to display the amount of times a button is clicked. Reverses if switch is flipped.
+
+import board
+from lcd.lcd import LCD
+from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+import time
+from digitalio import DigitalInOut, Direction, Pull
+
+# get and i2c object
+i2c = board.I2C()
+btn = DigitalInOut(board.D2)
+btn.direction = Direction.INPUT
+btn.pull = Pull.UP
+clickCount = 0
+
+switch = DigitalInOut(board.D7)
+switch.direction = Direction.INPUT
+switch.pull = Pull.UP
+# some LCDs are 0x3f... some are 0x27...
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+
+lcd.print("Grant")
+
+while True:
+    if not switch.value:
+        if not btn.value:
+            lcd.clear()
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("Click Count:")
+            lcd.set_cursor_pos(0,13)
+            clickCount = clickCount + 1
+            lcd.print(str(clickCount))
+        else:
+            pass
+    else:
+        if not btn.value:
+            lcd.clear()
+            lcd.set_cursor_pos(0, 0)
+            lcd.print("Click Count:")
+            lcd.set_cursor_pos(0,13)
+            clickCount = clickCount - 1
+            lcd.print(str(clickCount))
+        else:
+            pass
+    time.sleep(0.1) # sleep for debounce
+``` 
+### Evidence
+I was dumb and didn't take a photo.
+### Wiring 
+![image](https://github.com/ggastin30/CPython/assets/91094422/90706915-314d-4228-a2ef-f7c1a8b45584)
+### Reflection 
+I had a very great amount of trouble with this assignment but not because of the raw assignment itself, but because of the many issues I ran into on the way. The first problem I had was that the computer would not recognize the arduino board when the LCD was plugged in. I solved this by adding a switch to the power of the lcd so that it would only turn on later in the code. Secondly, the LCD would not print anything but that was easier to fix because I just needed to get a new one. My takeaway from this assignment was that LCDs are very finicky and you have to always try new things to work around their problems.
+
+## CircuitPython_MotorControl
+We had to control a motor by spinning it in different directions.
+### Code
+``` python
+import board               #[lines 1-4] Importing necessary libraries
+import time
+from analogio import AnalogOut, AnalogIn
+import simpleio
+
+motor = AnalogOut(board.A1) #[lines 5 & 6] Definining the motor and potentiometer
+pot = AnalogIn(board.A0)
+
+while True:
+    print(simpleio.map_range(pot.value, 96, 65520, 0, 65535)) #Print mapped potentiometer value to motor inputs
+    motor.value = int(simpleio.map_range(pot.value, 96, 65520, 0, 65535)) #Write the mapped value to motor
+    time.sleep(.1)       
+``` 
+### Evidence
+I was dumb and didn't take a photo.
+### Wiring
+![image](https://github.com/ggastin30/CPython/assets/91094422/6bef1dd5-b505-48d7-b06b-3add0ebfb561)
+### Reflection
+The motor control assignment was a breeze in terms of code but the wiring was very difficult. Everything in the circuit has to be correct or else something will get fried. Especially keep an eye on the transistor and which direction it is pointing because that will fry something in the circuit. The incorrect placement of the diode can also fry the board. Make sure to check the wiring with someone else before plugging it in.
 
 ## CircuitPython_RotaryEncoder
 This assignment changes traffic lights using a rotary encoder and displays the state of the light on an LCD.
