@@ -24,7 +24,7 @@ last_position = 0
 btn = digitalio.DigitalInOut(board.D1)
 btn.direction = digitalio.Direction.INPUT
 btn.pull = digitalio.Pull.UP
-Enstate = 0
+Enstate = 400
 
 Fan = analogio.AnalogOut(board.A1)
 
@@ -38,32 +38,30 @@ State = 0
 rpm = 0
 output = sP
 oldTime = time.monotonic()
-counter = 0
-G = 0
+G = 0 #Debounce Variable
 
 
 
 while True:
     while State == 0:
-        Fan.value = int(simpleio.map_range(output, 0, sP, 0, 65000))
-        if btn == False:
-            time.sleep(1)
-            print("bananaKumquat")
+        Fan.value = int(simpleio.map_range(output, 0, 1200, 0, 65000))
+        if btn.value == False:
+            time.sleep(.5)
+            print("MENU")
             State = 4
+            break
         #print(btn.value)
-        if time.monotonic() > oldTime +.5:
+        if time.monotonic() > oldTime +.1:
+            print("PID")
             State = 1
-        print(State)
     while State == 1:  # first trigger
         if photoI.value is True:  # if triggered
             last_I = time.monotonic()
             time.sleep(.05)
-            print(State)
             State = 2
     while State == 2:  # second trigger
         if photoI.value is True:  # if triggered
             new_I = time.monotonic()
-            print(State)
             State = 3
     while State == 3:  # computation
         since_I = new_I - last_I
@@ -72,10 +70,8 @@ while True:
         print((rpm, output, sP))
         # lcd.print(rpm)
         oldTime = time.monotonic()
-        print(State)
         State = 0
-    while State == 4:
-        print(State)
+    while State == 4: #Menu/PID selection
         position = encoder.position
         if position != last_position:
             if (position > last_position) & (G == 0):
@@ -89,7 +85,9 @@ while True:
                 G = 1
                 last_position = position
             G = 0
+        Fan.value = 50000
         #print(btn.value)
-        if btn == False:
+        if btn.value == False:
+            time.sleep(.5)
             sP = Enstate
             State = 1
