@@ -11,7 +11,7 @@ import rotaryio
 
 sP = 800 #set point
 
-pid = PID(6, .1, 2.5, setpoint=sP, sample_time=0.01) #D generally dampens oscillations 
+pid = PID(7, 0, 0, setpoint=sP, sample_time=0.01) #D generally dampens oscillations previously 6,.1,2.5
 pid.output_limits = (None, None)    # Output value will be between 
 
 photoI = digitalio.DigitalInOut(board.D8)
@@ -44,7 +44,8 @@ G = 0 #Debounce Variable
 
 while True:
     while State == 0:
-        Fan.value = int(simpleio.map_range(output, 0, 1200, 0, 65000))
+        Fan.value = int(simpleio.map_range(output, 0, 1200, 27000, 29000))
+        #Fan.value = 28750 #27500(300) - 28750
         if btn.value == False:
             time.sleep(.5)
             print("MENU")
@@ -52,7 +53,7 @@ while True:
             break
         #print(btn.value)
         if time.monotonic() > oldTime +.1:
-            print("PID")
+            #print("PID")
             State = 1
     while State == 1:  # first trigger
         if photoI.value is True:  # if triggered
