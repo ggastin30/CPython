@@ -9,9 +9,9 @@ from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
 import rotaryio
 # Import necessary libraries
 
-sP = 800 #set point
+sP = 700 #set point
 
-pid = PID(7, 0, 0, setpoint=sP, sample_time=0.01) #D generally dampens oscillations previously 6,.1,2.5
+pid = PID(12.5, .25, 2.5, setpoint=sP, sample_time=0.01) #D generally dampens oscillations previously 6,.1,2.5
 pid.output_limits = (None, None)    # Output value will be between 
 
 photoI = digitalio.DigitalInOut(board.D8)
@@ -44,8 +44,8 @@ G = 0 #Debounce Variable
 
 while True:
     while State == 0:
-        Fan.value = int(simpleio.map_range(output, 0, 1200, 27000, 29000))
-        #Fan.value = 28750 #27500(300) - 28750
+        Fan.value = int(simpleio.map_range(output, 0, 1150, 27500, 29000))
+        #Fan.value = 28750 #27500(300) - 28750(1100)
         if btn.value == False:
             time.sleep(.5)
             print("MENU")
@@ -68,7 +68,7 @@ while True:
         since_I = new_I - last_I
         rpm = 60/since_I
         output = pid(rpm)
-        print((rpm, output, sP))
+        print((rpm, rpm, sP))
         # lcd.print(rpm)
         oldTime = time.monotonic()
         State = 0
@@ -86,9 +86,10 @@ while True:
                 G = 1
                 last_position = position
             G = 0
-        Fan.value = 50000
+        Fan.value = 27500
         #print(btn.value)
         if btn.value == False:
             time.sleep(.5)
             sP = Enstate
+            pid.setpoint = sP
             State = 1
