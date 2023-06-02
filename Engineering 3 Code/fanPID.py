@@ -28,13 +28,13 @@ Enstate = 700
 
 Fan = analogio.AnalogOut(board.A1)
 
-lcdPower = digitalio.DigitalInOut(board.D9) #connects the lcd to pin 9
-lcdPower.direction = digitalio.Direction.INPUT #sets the lcd power flow as input
-lcdPower.pull = digitalio.Pull.DOWN #Pulls the power of the lcd down to ground
-while lcdPower.value is False: #creates an infinite loop that repeats until the lcd turns on
-    print("zzz")
-    time.sleep(0.1)
-print("I'm awake")
+#lcdPower = digitalio.DigitalInOut(board.D9) #connects the lcd to pin 9
+#lcdPower.direction = digitalio.Direction.INPUT #sets the lcd power flow as input
+#lcdPower.pull = digitalio.Pull.DOWN #Pulls the power of the lcd down to ground
+#while lcdPower.value is False: #creates an infinite loop that repeats until the lcd turns on
+    #print("zzz")
+    #time.sleep(0.1)
+#print("I'm awake")
 i2c = board.I2C()
 lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
 
