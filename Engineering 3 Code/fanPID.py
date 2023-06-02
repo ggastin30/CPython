@@ -52,8 +52,8 @@ G = 0 #Debounce Variable
 
 while True:
     while State == 0:
-        Fan.value = int(simpleio.map_range(output, 0, 1200, 27500, 29000))
-        #Fan.value = 28750 #27500(300) - 28750(1100)
+        Fan.value = int(simpleio.map_range(output, 0, 1200, 21000, 22900))
+        #Fan.value = 22800 #27500(300) - 28750(1100) now 22000 - 22800??? LCD brought down???
         if btn.value == False:
             time.sleep(.5)
             lcd.clear()
@@ -63,8 +63,9 @@ while True:
             break
         #print(btn.value)
         if time.monotonic() > oldTime +.1:
+            lcd.clear
             lcd.set_cursor_pos(0, 0)
-            lcd.print("PID MODE        ")
+            lcd.print("PID MODEset:" + str(sP))
             State = 1
     while State == 1:  # first trigger
         if photoI.value is True:  # if triggered
@@ -81,9 +82,8 @@ while True:
         output = pid(rpm)
         RPM = int(rpm)
         lcd.set_cursor_pos(1, 0)
-        lcd.print("RPM:" + str(RPM) + " Set:" + str(sP))
-        print((rpm, rpm, sP))
-        # lcd.print(rpm)
+        lcd.print("RPM:" + str(RPM))
+        print((rpm, output, sP))
         oldTime = time.monotonic()
         State = 0
     while State == 4: #Menu/PID selection
@@ -104,7 +104,7 @@ while True:
                 G = 1
                 last_position = position
             G = 0
-        Fan.value = 27500
+        Fan.value = 22000
         #print(btn.value)
         if btn.value == False:
             time.sleep(.5)
